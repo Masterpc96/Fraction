@@ -7,18 +7,14 @@
 
 #include "../headers/Fraction.h"
 
-// constructors and destructor
-Fraction::Fraction(int licznik, int mianownik) : licznik(licznik), mianownik(mianownik) {}
+// constructors
+Fraction::Fraction() {};
 
-Fraction::Fraction(const Fraction &toCopy) : licznik(toCopy.licznik), mianownik(toCopy.mianownik) {}
-
-Fraction::Fraction(Fraction &&toMove) : licznik(toMove.licznik), mianownik(toMove.mianownik) {
-    toMove.licznik = 0;
-    toMove.mianownik = 0;
-}
-
-Fraction::~Fraction() {
-
+Fraction::Fraction(int licznik, int mianownik) : licznik(licznik), mianownik(mianownik) {
+    if (mianownik < 0) {
+        this->licznik = -this->licznik;
+        this->mianownik = -this->mianownik;
+    }
 }
 
 
@@ -40,21 +36,6 @@ void Fraction::setMianownik(int mianownik) {
 }
 
 // operators
-Fraction &Fraction::operator=(const Fraction &other) {
-    licznik = other.licznik;
-    mianownik = other.mianownik;
-    return *this;
-} // done
-
-Fraction &Fraction::operator=(Fraction &&other) {
-    licznik = other.licznik;
-    other.licznik = 0;
-
-    mianownik = other.mianownik;
-    other.mianownik = 0;
-    return *this;
-} // done
-
 
 Fraction Fraction::operator+(Fraction &other) {
     Fraction temp(licznik * other.mianownik + other.licznik * mianownik, mianownik * other.mianownik);
@@ -90,19 +71,49 @@ Fraction &Fraction::operator*=(Fraction &other) {
 } // done
 
 Fraction Fraction::operator/(Fraction &other) {
-    Fraction temp(licznik * other.mianownik, mianownik * other.mianownik);
+    Fraction temp(licznik * other.mianownik, mianownik * other.licznik);
+    if (temp.mianownik < 0) {
+        temp.licznik = -temp.licznik;
+        temp.mianownik = -temp.mianownik;
+    }
     return temp;
 } // done
 
 Fraction &Fraction::operator/=(Fraction &other) {
     licznik *= mianownik;
     mianownik *= licznik;
+    if (mianownik < 0) {
+        licznik = -licznik;
+        mianownik = -mianownik;
+    }
     return *this;
 } // done
 
+Fraction &Fraction::operator++() {
+    licznik += mianownik;
+    return *this;
+} // pre and done
+
+Fraction Fraction::operator++(int) {
+    Fraction temp(*this);
+    licznik += mianownik;
+    return temp;
+} // post and done
+
+Fraction &Fraction::operator--() {
+    licznik -= mianownik;
+    return *this;
+} // done
+
+Fraction Fraction::operator--(int) {
+    Fraction temp(*this);
+    licznik -= mianownik;
+    return temp;
+}
+
 
 bool Fraction::operator<(const Fraction &other) const {
-    if (mianownik == other.mianownik) {
+    if (mianownik == other.mianownik || licznik == -other.licznik) {
         return licznik < other.licznik;
 
     } else if (licznik == other.licznik) {
@@ -114,7 +125,7 @@ bool Fraction::operator<(const Fraction &other) const {
 } // done
 
 bool Fraction::operator>(const Fraction &other) const {
-    if (mianownik == other.mianownik) {
+    if (mianownik == other.mianownik || licznik == -other.licznik) {
         return licznik > other.licznik;
 
     } else if (licznik == other.licznik) {
@@ -142,3 +153,25 @@ bool Fraction::operator==(const Fraction &other) const {
 bool Fraction::operator!=(const Fraction &other) const {
     return !(other == *this);
 } // done
+
+std::ostream &operator<<(std::ostream &os, const Fraction &fraction) {
+    os << fraction.licznik << "/" << fraction.mianownik;
+    return os;
+} // done
+
+//std::istream &operator>>(std::istream &in, Fraction &fraction) {
+//    in >> fraction.licznik >> fraction.mianownik;
+//    return in;
+//} // input number by number
+
+std::istream &operator>>(std::istream &in, Fraction &fraction) {
+    std::string input;
+    in >> input;
+    std::size_t pos = input.find('/');
+    fraction.licznik = std::stoi(input.substr(0, pos));
+    fraction.mianownik = std::stoi(input.substr(pos + 1));
+
+    return in;
+} // input with /
+
+// done

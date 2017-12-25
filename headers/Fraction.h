@@ -6,6 +6,9 @@
 #define FRACTION_FRACTION_H
 
 
+#include <ostream>
+#include <iostream>
+
 class Fraction {
 private:
     int licznik;
@@ -13,13 +16,9 @@ private:
 
 public:
     // constructors and destructor
+    Fraction();
+
     Fraction(int licznik, int mianownik);
-
-    Fraction (const Fraction& toCopy);
-
-    Fraction (Fraction&& toMove);
-
-    ~Fraction();
 
     // geters and setters
     int getLicznik() const;
@@ -31,11 +30,6 @@ public:
     void setMianownik(int mianownik);
 
     // operators
-
-    Fraction& operator=(const Fraction &other); // copy
-
-    Fraction& operator=(Fraction &&other); // move
-
 
     Fraction operator+(Fraction &other); // add
 
@@ -54,6 +48,12 @@ public:
     Fraction &operator/=(Fraction &other); // div and equals
 
 
+    Fraction &operator++(); // prefix increment
+    Fraction operator++(int); // postfix increment
+    Fraction &operator--(); // prefix decrement
+    Fraction operator--(int); // postfix decrement
+
+
     bool operator<(const Fraction &rhs) const;
 
     bool operator>(const Fraction &rhs) const;
@@ -66,7 +66,9 @@ public:
 
     bool operator!=(const Fraction &rhs) const;
 
+    friend std::ostream &operator<<(std::ostream &os, const Fraction &fraction);
 
+    friend std::istream &operator>>(std::istream &, Fraction &fraction);
 };
 
 
