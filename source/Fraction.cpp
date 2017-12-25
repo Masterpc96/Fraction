@@ -109,7 +109,7 @@ Fraction Fraction::operator--(int) {
     Fraction temp(*this);
     licznik -= mianownik;
     return temp;
-}
+} //done
 
 
 bool Fraction::operator<(const Fraction &other) const {
