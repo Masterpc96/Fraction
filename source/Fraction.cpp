@@ -48,8 +48,8 @@ void reduce(Fraction &fraction) {
         a = pom;
     }
 
-    fraction.setLicznik(fraction.getLicznik()/a);
-    fraction.setMianownik(fraction.getMianownik()/a);
+    fraction.setLicznik(fraction.getLicznik() / a);
+    fraction.setMianownik(fraction.getMianownik() / a);
 }
 
 // operators
@@ -180,7 +180,11 @@ bool Fraction::operator!=(const Fraction &other) const {
 } // done
 
 std::ostream &operator<<(std::ostream &os, const Fraction &fraction) {
-    os << fraction.licznik << "/" << fraction.mianownik;
+    if (fraction.mianownik == 1) {
+        os << fraction.licznik;
+    } else {
+        os << fraction.licznik << "/" << fraction.mianownik;
+    }
     return os;
 } // done
 
@@ -196,6 +200,7 @@ std::istream &operator>>(std::istream &in, Fraction &fraction) {
     std::size_t pos = input.find('/');
     fraction.licznik = std::stoi(input.substr(0, pos));
     fraction.mianownik = std::stoi(input.substr(pos + 1));
+    if(fraction.mianownik == 0) throw std::invalid_argument("Denominator cannot be ZERO");
     reduce(fraction);
     return in;
 } // input with /

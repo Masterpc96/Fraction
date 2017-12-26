@@ -6,7 +6,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/michael.urban/CLionProjects/fraction/main.cpp" "/Users/michael.urban/CLionProjects/fraction/cmake-build-debug/CMakeFiles/fraction.dir/main.cpp.o"
   "/Users/michael.urban/CLionProjects/fraction/source/Fraction.cpp" "/Users/michael.urban/CLionProjects/fraction/cmake-build-debug/CMakeFiles/fraction.dir/source/Fraction.cpp.o"
-  "/Users/michael.urban/CLionProjects/fraction/source/MyStack.cpp" "/Users/michael.urban/CLionProjects/fraction/cmake-build-debug/CMakeFiles/fraction.dir/source/MyStack.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

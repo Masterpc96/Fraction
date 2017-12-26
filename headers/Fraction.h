@@ -8,6 +8,7 @@
 
 #include <ostream>
 #include <iostream>
+#include <stdexcept>
 
 class Fraction {
 private:

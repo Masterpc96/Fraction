@@ -177,33 +177,6 @@ source/Fraction.cpp.s:
 	$(MAKE) -f CMakeFiles/fraction.dir/build.make CMakeFiles/fraction.dir/source/Fraction.cpp.s
 .PHONY : source/Fraction.cpp.s
 
-source/MyStack.o: source/MyStack.cpp.o
-
-.PHONY : source/MyStack.o
-
-# target to build an object file
-source/MyStack.cpp.o:
-	$(MAKE) -f CMakeFiles/fraction.dir/build.make CMakeFiles/fraction.dir/source/MyStack.cpp.o
-.PHONY : source/MyStack.cpp.o
-
-source/MyStack.i: source/MyStack.cpp.i
-
-.PHONY : source/MyStack.i
-
-# target to preprocess a source file
-source/MyStack.cpp.i:
-	$(MAKE) -f CMakeFiles/fraction.dir/build.make CMakeFiles/fraction.dir/source/MyStack.cpp.i
-.PHONY : source/MyStack.cpp.i
-
-source/MyStack.s: source/MyStack.cpp.s
-
-.PHONY : source/MyStack.s
-
-# target to generate assembly for a file
-source/MyStack.cpp.s:
-	$(MAKE) -f CMakeFiles/fraction.dir/build.make CMakeFiles/fraction.dir/source/MyStack.cpp.s
-.PHONY : source/MyStack.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -219,9 +192,6 @@ help:
 	@echo "... source/Fraction.o"
 	@echo "... source/Fraction.i"
 	@echo "... source/Fraction.s"
-	@echo "... source/MyStack.o"
-	@echo "... source/MyStack.i"
-	@echo "... source/MyStack.s"
 .PHONY : help
 
 

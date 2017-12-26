@@ -1,15 +1,20 @@
 #include <iostream>
+#include <stack>
+#include "headers/MyStack.h"
 #include "headers/Fraction.h"
+
 int main() {
 
 
-    Fraction fraction;
-    Fraction fraction1(1,2);
-    std::cout << "enter fraction" << std::endl;
-    std::cin >> fraction;
+    MyStack <Fraction>stack;
 
-    //--fraction;
+    for (Fraction i(1,2); i < Fraction(10,1); i++) {
+        stack.push(i);
+    }
 
-    std::cout <<(fraction) << std::endl;
+    while (!stack.isEmpty()){
+        std::cout << stack.pop()<< std::endl;
+    }
+
     return 0;
 }

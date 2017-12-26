@@ -92,9 +92,6 @@
 		<Unit filename="/Users/michael.urban/CLionProjects/fraction/source/Fraction.cpp">
 			<Option target="fraction"/>
 		</Unit>
-		<Unit filename="/Users/michael.urban/CLionProjects/fraction/source/MyStack.cpp">
-			<Option target="fraction"/>
-		</Unit>
 		<Unit filename="/Users/michael.urban/CLionProjects/fraction/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
