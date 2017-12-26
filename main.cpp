@@ -4,12 +4,12 @@ int main() {
 
 
     Fraction fraction;
-    Fraction fraction1(2,5);
+    Fraction fraction1(1,2);
     std::cout << "enter fraction" << std::endl;
     std::cin >> fraction;
 
     //--fraction;
 
-    std::cout << (fraction < fraction1) << std::endl;
+    std::cout <<(fraction) << std::endl;
     return 0;
 }

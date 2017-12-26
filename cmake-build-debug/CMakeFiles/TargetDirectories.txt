@@ -1,0 +1,3 @@
+/Users/michael.urban/CLionProjects/fraction/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/michael.urban/CLionProjects/fraction/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/michael.urban/CLionProjects/fraction/cmake-build-debug/CMakeFiles/fraction.dir

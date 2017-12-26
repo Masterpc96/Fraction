@@ -29,6 +29,8 @@ public:
 
     void setMianownik(int mianownik);
 
+
+
     // operators
 
     Fraction operator+(Fraction &other); // add
@@ -70,6 +72,8 @@ public:
 
     friend std::istream &operator>>(std::istream &, Fraction &fraction);
 };
+// own method
 
+void reduce(Fraction &fraction);
 
 #endif //FRACTION_FRACTION_H

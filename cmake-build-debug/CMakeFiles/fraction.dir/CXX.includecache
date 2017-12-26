@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/michael.urban/CLionProjects/fraction/headers/Fraction.h
+ostream
+-
+iostream
+-
+
+/Users/michael.urban/CLionProjects/fraction/headers/MyStack.h
+iostream
+-
+stdexcept
+-
+
+/Users/michael.urban/CLionProjects/fraction/main.cpp
+iostream
+-
+headers/Fraction.h
+/Users/michael.urban/CLionProjects/fraction/headers/Fraction.h
+
+/Users/michael.urban/CLionProjects/fraction/source/Fraction.cpp
+../headers/Fraction.h
+/Users/michael.urban/CLionProjects/fraction/headers/Fraction.h
+
+/Users/michael.urban/CLionProjects/fraction/source/MyStack.cpp
+../headers/MyStack.h
+/Users/michael.urban/CLionProjects/fraction/headers/MyStack.h
+
