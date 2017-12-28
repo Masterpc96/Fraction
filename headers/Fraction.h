@@ -20,6 +20,7 @@ public:
     Fraction();
 
     Fraction(int licznik, int mianownik);
+    Fraction(int licznik);
 
     // geters and setters
     int getLicznik() const;

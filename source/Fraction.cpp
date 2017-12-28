@@ -18,6 +18,9 @@ Fraction::Fraction(int licznik, int mianownik) : licznik(licznik), mianownik(mia
     reduce(*this);
 }
 
+Fraction::Fraction(int licznik) : licznik(licznik), mianownik(1) {
+}
+
 
 // getters and setters
 int Fraction::getLicznik() const {
@@ -74,7 +77,7 @@ Fraction Fraction::operator-(Fraction &other) {
 } // done
 
 Fraction &Fraction::operator-=(Fraction &other) {
-    licznik = licznik * other.mianownik + other.licznik * mianownik;
+    licznik = licznik * other.mianownik - other.licznik * mianownik;
     mianownik *= other.mianownik;
     reduce(*this);
     return *this;
@@ -198,10 +201,16 @@ std::istream &operator>>(std::istream &in, Fraction &fraction) {
     std::string input;
     in >> input;
     std::size_t pos = input.find('/');
-    fraction.licznik = std::stoi(input.substr(0, pos));
-    fraction.mianownik = std::stoi(input.substr(pos + 1));
-    if(fraction.mianownik == 0) throw std::invalid_argument("Denominator cannot be ZERO");
-    reduce(fraction);
+    if(pos == std::string::npos){
+        fraction.licznik = std::stoi(input);
+        fraction.mianownik = 1;
+    }else{
+        fraction.licznik = std::stoi(input.substr(0, pos));
+        fraction.mianownik = std::stoi(input.substr(pos + 1));
+        if(fraction.mianownik == 0) throw std::invalid_argument("Denominator cannot be ZERO");
+        reduce(fraction);
+    }
+
     return in;
 } // input with /
 
