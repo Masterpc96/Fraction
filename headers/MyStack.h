@@ -60,9 +60,16 @@ public:
 
     } // take first element from stack
     void clear() {
-        top = NULL;
+        while (top != NULL) {
+            Node *temp = top;
+            top = top->next;
+            delete temp;
+        }
         size = 0;
     }// clear stack
+    int getSize(){
+        return size;
+    }
 };
 
 
