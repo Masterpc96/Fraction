@@ -3,9 +3,12 @@
 //
 
 
-/**************** NOT TESTED ****************/
 
 #include "../headers/Fraction.h"
+//#define BOOST_TEST_DYN_LINK
+//#define BOOST_TEST_MODULE fraction
+//
+//#include <boost/test/unit_test.hpp>
 
 // constructors
 Fraction::Fraction() {};
@@ -43,7 +46,7 @@ void Fraction::setMianownik(int mianownik) {
 
 void reduce(Fraction &fraction) {
     int pom;
-    int a = fraction.getLicznik();
+    int a = abs(fraction.getLicznik());
     int b = fraction.getMianownik();
     while (b != 0) {
         pom = b;
@@ -107,8 +110,8 @@ Fraction Fraction::operator/(Fraction &other) {
 } // done
 
 Fraction &Fraction::operator/=(Fraction &other) {
-    licznik *= mianownik;
-    mianownik *= licznik;
+    licznik *=  other.mianownik;
+    mianownik *= other.licznik;
     if (mianownik < 0) {
         licznik = -licznik;
         mianownik = -mianownik;
@@ -138,6 +141,14 @@ Fraction Fraction::operator--(int) {
     licznik -= mianownik;
     return temp;
 } //done
+
+Fraction::operator int() {
+    return licznik/mianownik;
+}
+
+Fraction::operator double() {
+    return (double)licznik/mianownik;
+}
 
 
 bool Fraction::operator<(const Fraction &other) const {
@@ -182,6 +193,8 @@ bool Fraction::operator!=(const Fraction &other) const {
     return !(other == *this);
 } // done
 
+
+
 std::ostream &operator<<(std::ostream &os, const Fraction &fraction) {
     if (fraction.mianownik == 1) {
         os << fraction.licznik;
@@ -201,17 +214,193 @@ std::istream &operator>>(std::istream &in, Fraction &fraction) {
     std::string input;
     in >> input;
     std::size_t pos = input.find('/');
-    if(pos == std::string::npos){
+    if (pos == std::string::npos) {
         fraction.licznik = std::stoi(input);
         fraction.mianownik = 1;
-    }else{
+    } else {
         fraction.licznik = std::stoi(input.substr(0, pos));
         fraction.mianownik = std::stoi(input.substr(pos + 1));
-        if(fraction.mianownik == 0) throw std::invalid_argument("Denominator cannot be ZERO");
+        if (fraction.mianownik == 0) throw std::invalid_argument("Denominator cannot be ZERO");
+
+        if(fraction.mianownik < 0) {
+            fraction.licznik = - fraction.licznik;
+            fraction.mianownik = - fraction.mianownik;
+        }
         reduce(fraction);
     }
 
     return in;
 } // input with /
 
-// done
+
+
+//BOOST_AUTO_TEST_SUITE(Relational)
+//
+//    BOOST_AUTO_TEST_CASE(bigger) {
+//        Fraction a(1, 8);
+//        Fraction b(1, 12);
+//        BOOST_CHECK(a < b == false);
+//
+//
+//        Fraction c(5, 8);
+//        Fraction d(10, 8);
+//        BOOST_CHECK(c < d == true);
+//
+//
+//        Fraction e(5, 8);
+//        Fraction f(10, 12);
+//        BOOST_CHECK(e < f == true);
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(less) {
+//        Fraction a(1, 8);
+//        Fraction b(1, 12);
+//        BOOST_CHECK(a > b == true);
+//
+//
+//        Fraction c(5, 8);
+//        Fraction d(10, 8);
+//        BOOST_CHECK(c > d == false);
+//
+//
+//        Fraction e(5, 8);
+//        Fraction f(10, 12);
+//        BOOST_CHECK(e > f == false);
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(biggerOrEquals) {
+//        Fraction a(1, 8);
+//        Fraction b(1, 12);
+//        BOOST_CHECK(a <= b == false);
+//
+//
+//        Fraction c(2, 8);
+//        Fraction d(2, 8);
+//        BOOST_CHECK(c <= d == true);
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(lessOrEquals) {
+//        Fraction a(1, 12);
+//        Fraction b(1, 8);
+//        BOOST_CHECK(a <= b == true);
+//
+//
+//        Fraction c(2, 8);
+//        Fraction d(2, 8);
+//        BOOST_CHECK(c <= d == true);
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(equals) {
+//        Fraction a(1, 8);
+//        Fraction b(1, 12);
+//        BOOST_CHECK((a == b) == false);
+//
+//
+//        Fraction c(2, 8);
+//        Fraction d(2, 8);
+//        BOOST_CHECK((c == d) == true);
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(notEquals) {
+//        Fraction a(1, 8);
+//        Fraction b(1, 12);
+//        BOOST_CHECK((a != b) == true);
+//
+//
+//        Fraction c(2, 8);
+//        Fraction d(2, 8);
+//        BOOST_CHECK((c != d) == false);
+//    }
+//
+//BOOST_AUTO_TEST_SUITE_END()
+//
+//
+//BOOST_AUTO_TEST_SUITE(NWD)
+//
+//    BOOST_AUTO_TEST_CASE(bigger) {
+//        Fraction a(5, -100);
+//        reduce(a);
+//        BOOST_CHECK(a.getLicznik() == -1);
+//        BOOST_CHECK(a.getMianownik() == 20);
+//    }
+//
+//BOOST_AUTO_TEST_SUITE_END()
+//
+//
+//BOOST_AUTO_TEST_SUITE(streams)
+//
+//    BOOST_AUTO_TEST_CASE(input) {
+//        Fraction a;
+//        std::istringstream toConvert;
+//        std::string frac("1/2");
+//        toConvert.str(frac);
+//
+//        toConvert >> a;
+//
+//        BOOST_CHECK(a.getLicznik() == 1);
+//        BOOST_CHECK(a.getMianownik() == 2);
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(output) {
+//        Fraction a(2, 5);
+//        std::ostringstream os;
+//        os << a;
+//
+//        std::string frac = os.str();
+//
+//        BOOST_CHECK(frac == "2/5");
+//    }
+//
+//BOOST_AUTO_TEST_SUITE_END()
+//
+//BOOST_AUTO_TEST_SUITE(Matematyka)
+//
+//    BOOST_AUTO_TEST_CASE(testInt) {
+//        Fraction a(4, 3);
+//        BOOST_CHECK((static_cast<int>(a)) == 1);
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(testDouble) {
+//        Fraction a(1, 2);
+//        BOOST_CHECK((static_cast<double>(a)) == 0.5);
+//    }
+//
+//
+//    BOOST_AUTO_TEST_CASE(testAdd) {
+//        Fraction a(2, 3);
+//        Fraction b(4, 3);
+//        Fraction c(1, 2);
+//        c += b;
+//        BOOST_CHECK(a + b == Fraction(2));
+//        BOOST_CHECK(c == Fraction(11, 6));
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(testSub) {
+//        Fraction a(2, 3);
+//        Fraction b(4, 3);
+//        Fraction c(1, 2);
+//        c -= b;
+//        BOOST_CHECK(a - b == Fraction(-2, 3));
+//        BOOST_CHECK(c == Fraction(-5, 6));
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(testMult) {
+//        Fraction a(2, 3);
+//        Fraction b(4, 3);
+//        Fraction c(1, 2);
+//        c *= b;
+//        BOOST_CHECK(a * b == Fraction(8, 9));
+//        BOOST_CHECK(c == Fraction(2, 3));
+//    }
+//
+//    BOOST_AUTO_TEST_CASE(testDiv) {
+//        Fraction a(2, 3);
+//        Fraction b(4, 3);
+//        Fraction c(1, 2);
+//        c /= b;
+//        BOOST_CHECK(a / b == Fraction(1, 2));
+//        BOOST_CHECK(c == Fraction(3, 8));
+//    }
+//
+//BOOST_AUTO_TEST_SUITE_END()
+//

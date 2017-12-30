@@ -9,6 +9,7 @@
 #include <ostream>
 #include <iostream>
 #include <stdexcept>
+#include <math.h>
 
 class Fraction {
 private:
@@ -50,6 +51,10 @@ public:
     Fraction operator/(Fraction &other); // div
 
     Fraction &operator/=(Fraction &other); // div and equals
+
+    operator int();
+
+    operator double();
 
 
     Fraction &operator++(); // prefix increment
