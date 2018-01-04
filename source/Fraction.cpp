@@ -11,12 +11,16 @@
 //#include <boost/test/unit_test.hpp>
 
 // constructors
-Fraction::Fraction() {};
+Fraction::Fraction() = default;
 
-Fraction::Fraction(int licznik, int mianownik) : licznik(licznik), mianownik(mianownik) {
-    if (mianownik < 0) {
-        this->licznik = -this->licznik;
-        this->mianownik = -this->mianownik;
+Fraction::Fraction(int licznik, int mianownik) {
+    if (mianownik == 0) throw std::invalid_argument("Denumerator cannot be ZERO");
+    else if (mianownik < 0) {
+        this->licznik = -licznik;
+        this->mianownik = -mianownik;
+    } else {
+        this->licznik = licznik;
+        this->mianownik = mianownik;
     }
     reduce(*this);
 }
@@ -110,7 +114,7 @@ Fraction Fraction::operator/(Fraction &other) {
 } // done
 
 Fraction &Fraction::operator/=(Fraction &other) {
-    licznik *=  other.mianownik;
+    licznik *= other.mianownik;
     mianownik *= other.licznik;
     if (mianownik < 0) {
         licznik = -licznik;
@@ -143,11 +147,11 @@ Fraction Fraction::operator--(int) {
 } //done
 
 Fraction::operator int() {
-    return licznik/mianownik;
+    return licznik / mianownik;
 }
 
 Fraction::operator double() {
-    return (double)licznik/mianownik;
+    return (static_cast<double>(licznik) / static_cast<double>(mianownik));
 }
 
 
@@ -198,6 +202,8 @@ bool Fraction::operator!=(const Fraction &other) const {
 std::ostream &operator<<(std::ostream &os, const Fraction &fraction) {
     if (fraction.mianownik == 1) {
         os << fraction.licznik;
+    } else if (fraction.licznik == 0) {
+        os << 0;
     } else {
         os << fraction.licznik << "/" << fraction.mianownik;
     }
@@ -222,9 +228,9 @@ std::istream &operator>>(std::istream &in, Fraction &fraction) {
         fraction.mianownik = std::stoi(input.substr(pos + 1));
         if (fraction.mianownik == 0) throw std::invalid_argument("Denominator cannot be ZERO");
 
-        if(fraction.mianownik < 0) {
-            fraction.licznik = - fraction.licznik;
-            fraction.mianownik = - fraction.mianownik;
+        if (fraction.mianownik < 0) {
+            fraction.licznik = -fraction.licznik;
+            fraction.mianownik = -fraction.mianownik;
         }
         reduce(fraction);
     }
@@ -404,3 +410,7 @@ std::istream &operator>>(std::istream &in, Fraction &fraction) {
 //
 //BOOST_AUTO_TEST_SUITE_END()
 //
+
+
+
+//1/2 1/3 + 5/6 * 36/25 /
