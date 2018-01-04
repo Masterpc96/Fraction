@@ -9,7 +9,6 @@
 #ifndef FRACTION_ONPCALCULATOR_H
 #define FRACTION_ONPCALCULATOR_H
 
-#endif //FRACTION_ONPCALCULATOR_H
 template<class T>
 std::string onpCalculator(std::string input) {
     MyStack<T> stack;
@@ -71,3 +70,5 @@ std::string onpCalculator(std::string input) {
     toReturn << "The resulf of " << input << " is " << stack.pop();
     return toReturn.str();
 }
+
+#endif //FRACTION_ONPCALCULATOR_H
